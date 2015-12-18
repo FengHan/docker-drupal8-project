@@ -1,0 +1,23 @@
+mysql:  
+image: mysql:5.6
+expose:
+- "3306"
+ports:
+- "3307:3306"
+environment:
+MYSQL_DATABASE: database
+MYSQL_USER: admin
+MYSQL_ROOT_PASSWORD: root123
+web:  
+image: hanfeng/docker-drupal8
+volumes:
+- application:/var/www
+- logs:/var/log/supervisor
+- files:/var/www/sites/default/files
+ports:
+- "80:80"
+links:
+- mysql:mysql
+environment:
+BASE_URL: http://local.project.docker
+DRUPAL_ENVIRONMENT: development
